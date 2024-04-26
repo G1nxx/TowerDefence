@@ -14,6 +14,7 @@ ABasicBullet::ABasicBullet()
 void ABasicBullet::BeginPlay()
 {
 	forceSpeed = 5;
+	damage = 15;
 	Super::BeginPlay();
 	
 }

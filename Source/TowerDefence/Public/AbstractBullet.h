@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BasicEnemy.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
 #include "AbstractBullet.generated.h"

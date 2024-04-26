@@ -31,9 +31,16 @@ void AAbstractBullet::force()
 		FVector actorLocation = enemy->GetActorLocation();
 		if (actorLocation.X > 0 && actorLocation.Y > 0)
 		{
-			enemy->GetActorLocation();
-			FVector vector = enemy->GetActorLocation() - this->GetActorLocation();
+			FVector enemyLocation = enemy->GetActorLocation();
+			FVector thisLocation = this->GetActorLocation();
+
+			FVector vector = enemyLocation - thisLocation;
+			FRotator ThisRotation = this->GetActorRotation();
+			FRotator TempRotation = ThisRotation;
+			TempRotation.Yaw = UKismetMathLibrary::RInterpTo(ThisRotation, UKismetMathLibrary::FindLookAtRotation(thisLocation, enemyLocation), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 0.01).Yaw;
+
 			vector.Normalize();
+			this->SetActorRotation(TempRotation);
 			this->SetActorLocation(this->GetActorLocation() + vector * forceSpeed);
 		}
 		else
