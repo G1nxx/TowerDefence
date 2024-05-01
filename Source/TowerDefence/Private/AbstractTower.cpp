@@ -18,6 +18,7 @@ void AAbstractTower::BeginPlay()
 	ShootingSpeed = 0.4;
 	RotationSpeed = 0;
 	LevelOfTower = 1;
+	isShooting = false;
 
 	GetWorldTimerManager().SetTimer(timer, this, &AAbstractTower::shoot, ShootingSpeed, false);
 
@@ -37,6 +38,11 @@ void AAbstractTower::rotateRight() {
 	{
 		ThisRotation.Yaw -= ROTATION_CONST * ROTATION_ANGLE_RIGHT;
 		SetActorRotation(ThisRotation);
+		isShooting = false;
+	}
+	else
+	{
+		isShooting = true;
 	}
 }
 
@@ -46,6 +52,11 @@ void AAbstractTower::rotateLeft() {
 	{
 		ThisRotation.Yaw -= ROTATION_CONST * ROTATION_ANGLE_LEFT;
 		SetActorRotation(ThisRotation);
+		isShooting = false;
+	}
+	else
+	{
+		isShooting = true;
 	}
 }
 
@@ -69,7 +80,7 @@ void AAbstractTower::rotateObject()
 
 void AAbstractTower::shoot()
 {
-	if (AllEnemies.Num() > 0)
+	if (AllEnemies.Num() > 0 && isShooting)
 	{
 		AActor* tempBullet = GetWorld()->SpawnActor<AActor>(bullet, this->GetActorTransform());
 		AAbstractBullet* Bulle = Cast<AAbstractBullet>(tempBullet);
@@ -77,7 +88,11 @@ void AAbstractTower::shoot()
 		{
 			Bulle->enemy = AllEnemies[0];
 		}
+		GetWorldTimerManager().SetTimer(timer, this, &AAbstractTower::shoot, ShootingSpeed, false);
 	}
-	GetWorldTimerManager().SetTimer(timer, this, &AAbstractTower::shoot, ShootingSpeed, false);
+	else
+	{
+		GetWorldTimerManager().SetTimer(timer, this, &AAbstractTower::shoot, 0.01, false);
+	}
 }
 

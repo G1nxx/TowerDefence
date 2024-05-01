@@ -30,7 +30,7 @@ protected:
 	bool isRotatingX;
 	bool isRotatingY;
 
-	Dirrection EnemieDirrection;
+	Dirrection EnemyDirection;
 
 	int32 IndI;
 	TArray<FVector> ControlPoints;

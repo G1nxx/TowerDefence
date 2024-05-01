@@ -18,6 +18,8 @@ class TOWERDEFENCE_API AAbstractTower : public AActor
 {
 	GENERATED_BODY()
 
+	bool isShooting;
+
 	FRotator ThisRotation;
 
 	FVector ThisLocation;

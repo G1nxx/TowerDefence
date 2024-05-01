@@ -14,9 +14,9 @@ ASplashBullet::ASplashBullet()
 // Called when the game starts or when spawned
 void ASplashBullet::BeginPlay()
 {
-	forceSpeed = 0.5;
-	damage = 10;
 	Super::BeginPlay();
+	forceSpeed = 2;
+	damage = 10;
 	
 }
 

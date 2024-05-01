@@ -32,7 +32,7 @@ void AAbstractEnemy::BeginPlay()
 	isRotatingY = false;
 	ValueForKilling = 0;
 	Health = 100;
-	EnemieDirrection = forward;
+	EnemyDirection = forward;
 
 	ThisPosition = this->GetActorLocation();
 	ThisRotation = this->GetActorRotation();
@@ -70,7 +70,7 @@ void AAbstractEnemy::moveEnemy()
 				{
 					SetActorLocation(ControlPoints[IndI], true);
 					isRotatingX = true;
-					EnemieDirrection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y > RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
+					EnemyDirection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y > RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
 				}
 			}
 			else if (ThisPosition.Y > ControlPoints[IndI].Y)
@@ -81,7 +81,7 @@ void AAbstractEnemy::moveEnemy()
 				{
 					SetActorLocation(ControlPoints[IndI], true);
 					isRotatingX = true;
-					EnemieDirrection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y > RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
+					EnemyDirection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y > RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
 				}
 			}
 		}
@@ -94,7 +94,7 @@ void AAbstractEnemy::moveEnemy()
 				{
 					SetActorLocation(ControlPoints[IndI], true);
 					isRotatingY = true;
-					EnemieDirrection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y < RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
+					EnemyDirection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y < RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
 				}
 			}
 			else if (ThisPosition.X > ControlPoints[IndI].X) {
@@ -104,7 +104,7 @@ void AAbstractEnemy::moveEnemy()
 				{
 					SetActorLocation(ControlPoints[IndI], true);
 					isRotatingY = true;
-					EnemieDirrection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y < RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
+					EnemyDirection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y < RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
 				}
 			}
 		}
@@ -124,7 +124,7 @@ void AAbstractEnemy::rotateEnemy()
 	}
 	else if (isRotatingX)
 	{
-		if (EnemieDirrection == right)
+		if (EnemyDirection == right)
 		{
 			rotateRight();
 			if (ThisPosition.X > RotatePoints[IndI].X)
@@ -136,7 +136,7 @@ void AAbstractEnemy::rotateEnemy()
 				isRotatingX = false;
 			}
 		}
-		else if (EnemieDirrection == left)
+		else if (EnemyDirection == left)
 		{
 			rotateRight();
 			if (ThisPosition.X < RotatePoints[IndI].X)
@@ -151,7 +151,7 @@ void AAbstractEnemy::rotateEnemy()
 	}
 	else if (isRotatingY)
 	{
-		if (EnemieDirrection == right) {
+		if (EnemyDirection == right) {
 			rotateRight();
 			if (ThisPosition.Y > RotatePoints[IndI].Y)
 			{
@@ -162,7 +162,7 @@ void AAbstractEnemy::rotateEnemy()
 				isRotatingY = false;
 			}
 		}
-		else if (EnemieDirrection == left)
+		else if (EnemyDirection == left)
 		{
 			rotateRight();
 			if (ThisPosition.Y < RotatePoints[IndI].Y)
