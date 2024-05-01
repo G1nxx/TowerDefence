@@ -17,6 +17,7 @@ void AAbstractTower::BeginPlay()
 	ThisLocation = this->GetActorLocation();
 	ShootingSpeed = 0.4;
 	RotationSpeed = 0;
+	CostOfUpgrading = 20;
 	LevelOfTower = 1;
 	isShooting = false;
 

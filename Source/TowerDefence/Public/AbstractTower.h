@@ -41,6 +41,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Upgrading")
 	int32 LevelOfTower;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Upgrading")
+	int32 CostOfUpgrading;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Indexes")
 	ABasicEnemy* EnemyBase;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Indexes")
