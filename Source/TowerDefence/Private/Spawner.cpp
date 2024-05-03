@@ -6,7 +6,7 @@
 void ASpawner::newWave()
 {
 	EnemiesCount = 30;
-
+	Cast<AAbstractEnemy>(EnemyActor)->Health *= 2;
 	GetWorldTimerManager().SetTimer(timer, this, &ASpawner::SpawnEnemies, 10, false);
 }
 
@@ -21,7 +21,7 @@ ASpawner::ASpawner()
 void ASpawner::SpawnEnemies()
 {   
 	if (EnemiesCount--) {
-		GetWorld()->SpawnActor<AActor>(EnemiesActor, this->GetActorTransform());
+		GetWorld()->SpawnActor<AActor>(EnemyActor, this->GetActorTransform());
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Enemy spawned"));
 		GetWorldTimerManager().SetTimer(timer, this, &ASpawner::SpawnEnemies, SpawnTimer, false);
 	}

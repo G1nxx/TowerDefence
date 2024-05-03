@@ -8,6 +8,8 @@ ASplashBullet::ASplashBullet()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	forceSpeed = 2;
+	damage = 10;
 
 }
 
@@ -15,7 +17,7 @@ ASplashBullet::ASplashBullet()
 void ASplashBullet::BeginPlay()
 {
 	Super::BeginPlay();
-	forceSpeed = 2;
+	forceSpeed = 3;
 	damage = 10;
 	
 }

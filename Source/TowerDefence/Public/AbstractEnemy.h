@@ -45,7 +45,7 @@ public:
 	void rotateEnemy();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Health")
-	int32 Health;
+	double Health;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Health")
 	int32 ValueForKilling;

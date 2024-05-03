@@ -33,6 +33,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage")
 	int32 damage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage")
+	int32 levelOfDamage;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -33,7 +33,7 @@ public:
 	double SpawnTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPoint")
-	TSubclassOf<AActor> EnemiesActor;
+	TSubclassOf<AActor> EnemyActor;
 
 protected:
 	// Called when the game starts or when spawned

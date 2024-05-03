@@ -86,6 +86,10 @@ void AAbstractTower::rotateObject()
 			else { rotateRight(); }
 		}
 	}
+	else
+	{
+		isShooting = false;
+	}
 }
 
 void AAbstractTower::shoot()
@@ -96,6 +100,7 @@ void AAbstractTower::shoot()
 		AAbstractBullet* Bulle = Cast<AAbstractBullet>(tempBullet);
 		if (Bulle)
 		{
+			Bulle->levelOfDamage = LevelOfTower - 1;
 			Bulle->enemy = AllEnemies[0];
 		}
 		GetWorldTimerManager().SetTimer(timer, this, &AAbstractTower::shoot, ShootingSpeed, false);
