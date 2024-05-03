@@ -34,10 +34,19 @@ void AAbstractTower::Tick(float DeltaTime)
 	rotateObject();
 }
 
+void AAbstractTower::UpdateLevel()
+{
+	this->RotationSpeed *= 1.1;
+	this->ShootingSpeed /= 1.12;
+	this->CostOfUpgrading *= 1.8;
+	LevelOfTower++;
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Enemy Destroyed"));
+}
+
 void AAbstractTower::rotateRight() {
 	if (abs(TempRotation.Yaw - ThisRotation.Yaw) > ROTATION_CONST * ROTATION_ANGLE_RIGHT)
 	{
-		ThisRotation.Yaw -= ROTATION_CONST * ROTATION_ANGLE_RIGHT;
+		ThisRotation.Yaw -= RotationSpeed * ROTATION_ANGLE_RIGHT;
 		SetActorRotation(ThisRotation);
 		isShooting = false;
 	}
@@ -51,7 +60,7 @@ void AAbstractTower::rotateRight() {
 void AAbstractTower::rotateLeft() {
 	if (abs(TempRotation.Yaw - ThisRotation.Yaw) > -ROTATION_CONST * ROTATION_ANGLE_LEFT)
 	{
-		ThisRotation.Yaw -= ROTATION_CONST * ROTATION_ANGLE_LEFT;
+		ThisRotation.Yaw -= RotationSpeed * ROTATION_ANGLE_LEFT;
 		SetActorRotation(ThisRotation);
 		isShooting = false;
 	}

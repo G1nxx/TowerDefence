@@ -17,6 +17,7 @@ void ASplashTower::BeginPlay()
 	Super::BeginPlay();
 	RotationSpeed = ROTATION_CONST * 2;
 	LevelOfTower = 1;
+	CostOfTower = 60;
 	ShootingSpeed = 1;
 	
 }

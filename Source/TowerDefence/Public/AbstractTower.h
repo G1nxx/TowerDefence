@@ -44,6 +44,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Upgrading")
 	int32 CostOfUpgrading;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Upgrading")
+	int32 CostOfTower;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Indexes")
 	ABasicEnemy* EnemyBase;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Indexes")
@@ -51,7 +54,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPoint")
 	TSubclassOf<AActor> bullet;
 
-	UFUNCTION(BlueprintCallable, Category = "Update")
+	UFUNCTION(BlueprintCallable, Category = "Upgrade")
+	void UpdateLevel();
 
 	void rotateRight();
 
