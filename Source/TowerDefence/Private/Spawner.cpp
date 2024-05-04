@@ -30,9 +30,8 @@ void ASpawner::SpawnEnemies()
 			if (waveCount % 5 != 0 || waveCount % 7 != 0 || waveCount % 4 == 0)
 			{
 				AActor* tempEnemy = GetWorld()->SpawnActor<AActor>(EnemyActor, this->GetActorTransform());
-
 				AAbstractEnemy* enemy = Cast<AAbstractEnemy>(tempEnemy);
-				enemy->Health *= 1.05;
+				enemy->Health *= std::powl(1.02, waveCount);
 				enemy->ControlPoints = this->FirstLevelFirstWayControlPoints;
 				enemy->RotatePoints = this->FirstLevelFirstWayRotatePoints;
 				enemy->setIsMoving(true);
@@ -47,9 +46,8 @@ void ASpawner::SpawnEnemies()
 			if (waveCount % 5 == 0 || waveCount % 7 == 0)
 			{
 				AActor* tempEnemy = GetWorld()->SpawnActor<AActor>(EnemyActor, this->GetActorTransform());
-
 				AAbstractEnemy* enemy = Cast<AAbstractEnemy>(tempEnemy);
-				enemy->Health *= 1.05;
+				enemy->Health *= std::powl(1.02, waveCount);
 				enemy->ControlPoints = this->FirstLevelSecondWayControlPoints;
 				enemy->RotatePoints = this->FirstLevelSecondWayRotatePoints;
 				enemy->setIsMoving(true);

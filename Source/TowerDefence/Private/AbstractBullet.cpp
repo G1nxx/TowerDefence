@@ -29,7 +29,7 @@ void AAbstractBullet::force()
 	if (enemy && !enemy->IsActorBeingDestroyed())
 	{
 		FVector actorLocation = enemy->GetActorLocation();
-		if (actorLocation.X > 0 && actorLocation.Y > 0)
+		if (actorLocation.X >= 0 && actorLocation.Y >= 0 && actorLocation.Y <= 960 && actorLocation.X <= 1792)
 		{
 			FVector enemyLocation = enemy->GetActorLocation();
 			FVector thisLocation = this->GetActorLocation();

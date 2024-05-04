@@ -53,6 +53,8 @@ public:
 	TArray<AActor*> AllEnemies;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPoint")
 	TSubclassOf<AActor> bullet;
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Clickked")
+	void clickedOnTower();
 
 	UFUNCTION(BlueprintCallable, Category = "Upgrade")
 	void UpdateLevel();
