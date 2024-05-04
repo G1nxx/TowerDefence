@@ -29,16 +29,20 @@ protected:
 
 	bool isRotatingX;
 	bool isRotatingY;
+	bool isMoving;
 
 	Dirrection EnemyDirection;
 
 	int32 IndI;
-	TArray<FVector> ControlPoints;
-	TArray<FVector> RotatePoints;
 	
 public:	
 	// Sets default values for this actor's properties
 	AAbstractEnemy();
+
+	TArray<FVector> ControlPoints;
+	TArray<FVector> RotatePoints;
+
+	void setIsMoving(bool branch);
 
 	void moveEnemy();
 

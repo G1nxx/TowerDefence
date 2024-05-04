@@ -1,21 +1,43 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
+#include <type_traits>
 #include "CoreMinimal.h"
 #include "TimerManager.h"
 #include "BasicEnemy.h"
 #include "GameFramework/Actor.h"
 #include "Spawner.generated.h"
 
+
+
+UENUM(BlueprintType)
+enum Way
+{
+	first UMETA(DisplayName = "first"),
+	second UMETA(DisplayName = "second"),
+	third UMETA(DisplayName = "third"),
+	fourt UMETA(DisplayName = "fourth")
+};
+
 UCLASS()
 class TOWERDEFENCE_API ASpawner : public AActor
 {
 	GENERATED_BODY()
 
+	int32 waveCount;
+
 	FTimerHandle timer;
 
 	FTimerHandle timerWave;
+
+	FVector ThisPosition;
+
+	FRotator ThisRotation;
+
+	TArray<FVector> FirstLevelFirstWayControlPoints;
+	TArray<FVector> FirstLevelFirstWayRotatePoints;
+
+	TArray<FVector> FirstLevelSecondWayControlPoints;
+	TArray<FVector> FirstLevelSecondWayRotatePoints;
 
 	void newWave();
 	
@@ -28,6 +50,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPoint")
 	int32 EnemiesCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Way")
+	TEnumAsByte<Way> thisWay;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UTimer")
 	double SpawnTimer;

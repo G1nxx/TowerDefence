@@ -36,17 +36,6 @@ void AAbstractEnemy::BeginPlay()
 
 	ThisPosition = this->GetActorLocation();
 	ThisRotation = this->GetActorRotation();
-	ControlPoints.Add(FVector(ThisPosition.X, ThisPosition.Y + 21 * SIZE_OF_TITLE, ThisPosition.Z));
-	ControlPoints.Add(FVector(ThisPosition.X + 39 * SIZE_OF_TITLE, ThisPosition.Y + 22 * SIZE_OF_TITLE, ThisPosition.Z));
-	ControlPoints.Add(FVector(ThisPosition.X + 40 * SIZE_OF_TITLE, ThisPosition.Y + 7 * SIZE_OF_TITLE, ThisPosition.Z));
-	ControlPoints.Add(FVector(ThisPosition.X + 13 * SIZE_OF_TITLE, ThisPosition.Y + 6 * SIZE_OF_TITLE, ThisPosition.Z));
-	ControlPoints.Add(FVector(ThisPosition.X + 12 * SIZE_OF_TITLE, ThisPosition.Y + 16 * SIZE_OF_TITLE, ThisPosition.Z));
-
-	RotatePoints.Add(FVector(ThisPosition.X + SIZE_OF_TITLE, ThisPosition.Y + 21 * SIZE_OF_TITLE, ThisPosition.Z));
-	RotatePoints.Add(FVector(ThisPosition.X + 39 * SIZE_OF_TITLE, ThisPosition.Y + 21 * SIZE_OF_TITLE, ThisPosition.Z));
-	RotatePoints.Add(FVector(ThisPosition.X + 39 * SIZE_OF_TITLE, ThisPosition.Y + 7 * SIZE_OF_TITLE, ThisPosition.Z));
-	RotatePoints.Add(FVector(ThisPosition.X + 13 * SIZE_OF_TITLE, ThisPosition.Y + 7 * SIZE_OF_TITLE, ThisPosition.Z));
-	RotatePoints.Add(FVector(ThisPosition.X + 12 * SIZE_OF_TITLE, ThisPosition.Y + 16 * SIZE_OF_TITLE, ThisPosition.Z));
 	Super::BeginPlay();
 }
 
@@ -54,7 +43,15 @@ void AAbstractEnemy::BeginPlay()
 void AAbstractEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	moveEnemy();
+	if (isMoving)
+	{
+		moveEnemy();
+	}
+}
+
+void AAbstractEnemy::setIsMoving(bool branch)
+{
+	isMoving = branch;
 }
 
 void AAbstractEnemy::moveEnemy()
@@ -107,6 +104,10 @@ void AAbstractEnemy::moveEnemy()
 					EnemyDirection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y < RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
 				}
 			}
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("error"));
 		}
 	}
 	else
