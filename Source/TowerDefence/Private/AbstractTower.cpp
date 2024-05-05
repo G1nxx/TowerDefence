@@ -21,9 +21,10 @@ void AAbstractTower::BeginPlay()
 	LevelOfTower = 1;
 	isShooting = false;
 
-	GetWorldTimerManager().SetTimer(timer, this, &AAbstractTower::shoot, ShootingSpeed, false);
 
 	Super::BeginPlay();
+	GetWorldTimerManager().SetTimer(timer, this, &AAbstractTower::shoot, ShootingSpeed, false); 
+	GetWorldTimerManager().SetTimer(rotateTimer, this, &AAbstractTower::rotateObject, WORLD_FRAME_SPEED, true);
 	
 }
 
@@ -31,7 +32,6 @@ void AAbstractTower::BeginPlay()
 void AAbstractTower::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	rotateObject();
 }
 
 void AAbstractTower::UpdateLevel()

@@ -31,6 +31,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CostOfTowers")
 	int32 SniperTowerCost = 80;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "EndOfGame")
+	void baseDestroyedEvent();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

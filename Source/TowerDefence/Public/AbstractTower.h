@@ -1,6 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
+
+#ifndef WORLD_FRAME_SPEED
+#define WORLD_FRAME_SPEED 1.f / 60.f
+#endif //WORLD_FRAME_SPEED
+
 #define ROTATION_CONST 57.2957795131f
 #define ROTATION_ANGLE_RIGHT 0.025l
 #define ROTATION_ANGLE_LEFT -0.025l
@@ -27,6 +32,8 @@ class TOWERDEFENCE_API AAbstractTower : public AActor
 	FRotator TempRotation;
 
 	FTimerHandle timer;
+
+	FTimerHandle rotateTimer;
 	
 public:	
 	// Sets default values for this actor's properties

@@ -10,13 +10,14 @@ void AAbstractBullet::BeginPlay()
 	forceSpeed = 5;
 	rotationIsSet = 0;
 	damage = 20;
+
+	GetWorldTimerManager().SetTimer(forceTimer, this, &AAbstractBullet::force, WORLD_FRAME_SPEED, true);
 }
 
 // Called every frame
 void AAbstractBullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	force();
 }
 
 AAbstractBullet::AAbstractBullet()

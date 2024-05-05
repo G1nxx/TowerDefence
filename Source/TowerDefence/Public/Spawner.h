@@ -23,8 +23,6 @@ class TOWERDEFENCE_API ASpawner : public AActor
 {
 	GENERATED_BODY()
 
-	int32 waveCount;
-
 	FTimerHandle timer;
 
 	FTimerHandle timerWave;
@@ -50,6 +48,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPoint")
 	int32 EnemiesCount;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "WaveCount")
+	int32 waveCount;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Way")
 	TEnumAsByte<Way> thisWay;

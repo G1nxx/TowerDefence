@@ -1,8 +1,4 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-#define SIZE_OF_TITLE 32u
-#define ROTATION_ANGLE_RIGHT_ENEMY 0.025l * MovementSpeed
-#define ROTATION_ANGLE_LEFT_ENEMY -0.025l * MovementSpeed
-#define ROTATION_CONST 57.2957795131f
 
 enum Dirrection {
 	forward,
@@ -11,6 +7,15 @@ enum Dirrection {
 };
 
 #pragma once
+
+#ifndef WORLD_FRAME_SPEED
+#define WORLD_FRAME_SPEED 1.f / 60.f
+#endif //WORLD_FRAME_SPEED
+
+#define SIZE_OF_TITLE 32u
+#define ROTATION_ANGLE_RIGHT_ENEMY 0.025l * MovementSpeed
+#define ROTATION_ANGLE_LEFT_ENEMY -0.025l * MovementSpeed
+#define ROTATION_CONST 57.2957795131f
 
 #include "CoreMinimal.h"
 #include "MainBase.h"
@@ -25,6 +30,8 @@ class TOWERDEFENCE_API AAbstractEnemy : public AActor
 	FVector ThisPosition;
 
 	FRotator ThisRotation;
+
+	FTimerHandle moveTimer;
 protected:
 
 	bool isRotatingX;
@@ -34,6 +41,8 @@ protected:
 	Dirrection EnemyDirection;
 
 	int32 IndI;
+
+	void checkMoveEnemy();
 	
 public:	
 	// Sets default values for this actor's properties

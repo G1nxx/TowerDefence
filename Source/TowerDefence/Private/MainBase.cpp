@@ -26,6 +26,7 @@ void AMainBase::Tick(float DeltaTime)
 	if (HealthOfMainBase <= 0)
 	{
 		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		baseDestroyedEvent();
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("You lose!"));
 	}
 }

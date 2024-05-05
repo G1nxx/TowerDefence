@@ -18,7 +18,7 @@ void ASniperTower::BeginPlay()
 	LevelOfTower = 1;
 	CostOfTower = 80;
 	CostOfUpgrading = 50;
-	ShootingSpeed = 2;
+	ShootingSpeed = 3;
 	
 }
 

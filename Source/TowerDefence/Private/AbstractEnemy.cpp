@@ -3,6 +3,14 @@
 
 #include "AbstractEnemy.h"
 
+void AAbstractEnemy::checkMoveEnemy()
+{
+	if (isMoving)
+	{
+		moveEnemy();
+	}
+}
+
 // Sets default values
 AAbstractEnemy::AAbstractEnemy()
 {
@@ -37,16 +45,15 @@ void AAbstractEnemy::BeginPlay()
 	ThisPosition = this->GetActorLocation();
 	ThisRotation = this->GetActorRotation();
 	Super::BeginPlay();
+
+
+	GetWorldTimerManager().SetTimer(moveTimer, this, &AAbstractEnemy::checkMoveEnemy, WORLD_FRAME_SPEED, true);
 }
 
 // Called every frame
 void AAbstractEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (isMoving)
-	{
-		moveEnemy();
-	}
 }
 
 void AAbstractEnemy::setIsMoving(bool branch)
