@@ -17,8 +17,9 @@ void ABasicTower::BeginPlay()
 	Super::BeginPlay();
 	RotationSpeed = ROTATION_CONST;
 	LevelOfTower = 1;
-	CostOfTower = 40;
-	ShootingSpeed = 0.5;
+	CostOfTower = 50;
+	CostOfUpgrading = 30;
+	ShootingSpeed = 1.3;
 	
 }
 

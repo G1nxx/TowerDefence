@@ -36,9 +36,9 @@ void AAbstractTower::Tick(float DeltaTime)
 
 void AAbstractTower::UpdateLevel()
 {
-	this->RotationSpeed *= 1.1;
-	this->ShootingSpeed /= 1.12;
-	this->CostOfUpgrading *= 1.8;
+	this->RotationSpeed *= 1.04;
+	this->ShootingSpeed /= 1.05;
+	this->CostOfUpgrading *= 1.67;
 	LevelOfTower++;
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Enemy Destroyed"));
 }

@@ -18,7 +18,7 @@ void ASplashBullet::BeginPlay()
 {
 	Super::BeginPlay();
 	forceSpeed = 3;
-	damage = 10;
+	damage = 25;
 	
 }
 

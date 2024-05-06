@@ -23,13 +23,13 @@ public:
 	int32 MoneyInGame;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CostOfTowers")
-	int32 BasicTowerCost = 40;
+	int32 BasicTowerCost = 50;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CostOfTowers")
-	int32 SplashTowerCost = 60;
+	int32 SplashTowerCost = 65;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CostOfTowers")
-	int32 SniperTowerCost = 80;
+	int32 SniperTowerCost = 100;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "EndOfGame")
 	void baseDestroyedEvent();

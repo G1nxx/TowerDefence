@@ -5,10 +5,19 @@
 
 void ASpawner::newWave()
 {
-
-	EnemiesCount = 10;
+	if ( thisWay == first)
+	{
+		if (waveCount % 8 == 0 && thisWay % 24 != 0) { EnemiesCount = 20; }
+		else if (waveCount % 9 == 0) { EnemiesCount = 30; }
+		else { EnemiesCount = 10; }
+	}
+	else if (thisWay == second)
+	{
+		if (waveCount % 19 == 0 && waveCount > 40) { EnemiesCount = 25; }
+		else { EnemiesCount = 10; }
+	}
 	GetWorldTimerManager().SetTimer(timer, this, &ASpawner::SpawnEnemies, SpawnTimer, false);
-	GetWorldTimerManager().SetTimer(timerWave, this, &ASpawner::newWave, 10, false);
+	GetWorldTimerManager().SetTimer(timerWave, this, &ASpawner::newWave, 15, false);
 
 	++waveCount;
 }
@@ -31,7 +40,7 @@ void ASpawner::SpawnEnemies()
 			{
 				AActor* tempEnemy = GetWorld()->SpawnActor<AActor>(EnemyActor, this->GetActorTransform());
 				AAbstractEnemy* enemy = Cast<AAbstractEnemy>(tempEnemy);
-				enemy->Health *= std::powl(1.02, waveCount);
+				enemy->Health *= std::powl(1.065, waveCount);
 				enemy->ControlPoints = this->FirstLevelFirstWayControlPoints;
 				enemy->RotatePoints = this->FirstLevelFirstWayRotatePoints;
 				enemy->setIsMoving(true);
@@ -43,11 +52,11 @@ void ASpawner::SpawnEnemies()
 			}
 			break;
 		case second:
-			if (waveCount % 5 == 0 || waveCount % 7 == 0)
+			if ((waveCount % 5 == 0 || waveCount % 7 == 0) && waveCount > 15)
 			{
 				AActor* tempEnemy = GetWorld()->SpawnActor<AActor>(EnemyActor, this->GetActorTransform());
 				AAbstractEnemy* enemy = Cast<AAbstractEnemy>(tempEnemy);
-				enemy->Health *= std::powl(1.02, waveCount);
+				enemy->Health *= std::powl(1.065, waveCount);
 				enemy->ControlPoints = this->FirstLevelSecondWayControlPoints;
 				enemy->RotatePoints = this->FirstLevelSecondWayRotatePoints;
 				enemy->setIsMoving(true);
@@ -99,7 +108,7 @@ void ASpawner::BeginPlay()
 	FirstLevelSecondWayRotatePoints.Add(FVector(ThisPosition.X - 11 * SIZE_OF_TITLE, ThisPosition.Y - 25 * SIZE_OF_TITLE, ThisPosition.Z));
 	FirstLevelSecondWayRotatePoints.Add(FVector(ThisPosition.X - 12 * SIZE_OF_TITLE, ThisPosition.Y - 16 * SIZE_OF_TITLE, ThisPosition.Z));
 
-	newWave();
+	GetWorldTimerManager().SetTimer(timerWave, this, &ASpawner::newWave, 10, false);
 }
 
 // Called every frame

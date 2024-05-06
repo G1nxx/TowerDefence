@@ -16,8 +16,8 @@ void ASniperTower::BeginPlay()
 	Super::BeginPlay();
 	RotationSpeed = ROTATION_CONST / 2;
 	LevelOfTower = 1;
-	CostOfTower = 80;
-	CostOfUpgrading = 50;
+	CostOfTower = 100;
+	CostOfUpgrading = 65;
 	ShootingSpeed = 3;
 	
 }
