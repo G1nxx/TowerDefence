@@ -9,7 +9,7 @@ ABasicEnemy::ABasicEnemy()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	Health = 40;
-	IndI = 0;
+	indI = 0;
 	ValueForKilling = 3;
 	MovementSpeed = 1;
 }
@@ -19,7 +19,7 @@ void ABasicEnemy::BeginPlay()
 {
 	AAbstractEnemy::BeginPlay();
 	Health = 25;
-	IndI = 0;
+	indI = 0;
 	ValueForKilling = 3;
 	MovementSpeed = 1;
 	

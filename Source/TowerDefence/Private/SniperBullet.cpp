@@ -9,7 +9,7 @@ ASniperBullet::ASniperBullet()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	forceSpeed = 30;
-	damage = 80;
+	Damage = 80;
 
 }
 
@@ -18,7 +18,7 @@ void ASniperBullet::BeginPlay()
 {
 	Super::BeginPlay();
 	forceSpeed = 30;
-	damage = 80;
+	Damage = 80;
 	
 }
 

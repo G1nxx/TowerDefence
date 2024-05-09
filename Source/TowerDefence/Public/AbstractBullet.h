@@ -5,6 +5,8 @@
 #ifndef WORLD_FRAME_SPEED
 #define WORLD_FRAME_SPEED 1.f / 60.f
 #endif //WORLD_FRAME_SPEED
+#define MAP_WIDTH 1792
+#define MAP_HEIGHT 960
 
 #include "CoreMinimal.h"
 #include "BasicEnemy.h"
@@ -29,18 +31,18 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Speed")
 	double forceSpeed;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Indexes")
-	TArray<AActor*> AllEnemies;
+	TArray<AActor*> allEnemies;
 
 	void force();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-	AActor* enemy;
+	AActor* Enemy;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage")
-	int32 damage;
+	int32 Damage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage")
-	int32 levelOfDamage;
+	int32 LevelOfDamage;
 
 protected:
 	// Called when the game starts or when spawned

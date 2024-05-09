@@ -13,8 +13,8 @@ AAbstractTower::AAbstractTower()
 // Called when the game starts or when spawned
 void AAbstractTower::BeginPlay()
 {
-	ThisRotation = this->GetActorRotation();
-	ThisLocation = this->GetActorLocation();
+	thisRotation = this->GetActorRotation();
+	thisLocation = this->GetActorLocation();
 	ShootingSpeed = 0.4;
 	RotationSpeed = 0;
 	CostOfUpgrading = 20;
@@ -36,18 +36,18 @@ void AAbstractTower::Tick(float DeltaTime)
 
 void AAbstractTower::UpdateLevel()
 {
-	this->RotationSpeed *= 1.04;
-	this->ShootingSpeed /= 1.05;
-	this->CostOfUpgrading *= 1.67;
+	this->RotationSpeed *= ROTATION_UPGRADE_CONST;
+	this->ShootingSpeed /= SHOOTING_UPGRADE_CONST;
+	this->CostOfUpgrading *= UPGRADE_COST_CONST;
 	LevelOfTower++;
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Enemy Destroyed"));
 }
 
 void AAbstractTower::rotateRight() {
-	if (abs(TempRotation.Yaw - ThisRotation.Yaw) > ROTATION_CONST * ROTATION_ANGLE_RIGHT)
+	if (abs(tempRotation.Yaw - thisRotation.Yaw) > ROTATION_CONST * ROTATION_ANGLE_RIGHT)
 	{
-		ThisRotation.Yaw -= RotationSpeed * ROTATION_ANGLE_RIGHT;
-		SetActorRotation(ThisRotation);
+		thisRotation.Yaw -= RotationSpeed * ROTATION_ANGLE_RIGHT;
+		SetActorRotation(thisRotation);
 		isShooting = false;
 	}
 	else
@@ -58,10 +58,10 @@ void AAbstractTower::rotateRight() {
 
 
 void AAbstractTower::rotateLeft() {
-	if (abs(TempRotation.Yaw - ThisRotation.Yaw) > -ROTATION_CONST * ROTATION_ANGLE_LEFT)
+	if (abs(tempRotation.Yaw - thisRotation.Yaw) > -ROTATION_CONST * ROTATION_ANGLE_LEFT)
 	{
-		ThisRotation.Yaw -= RotationSpeed * ROTATION_ANGLE_LEFT;
-		SetActorRotation(ThisRotation);
+		thisRotation.Yaw -= RotationSpeed * ROTATION_ANGLE_LEFT;
+		SetActorRotation(thisRotation);
 		isShooting = false;
 	}
 	else
@@ -78,11 +78,11 @@ void AAbstractTower::rotateObject()
 
 		if (EnemyLocation.X > 0 && EnemyLocation.Y > 0)
 		{
-			TempRotation = ThisRotation;
-			TempRotation.Yaw = UKismetMathLibrary::RInterpTo(ThisRotation, UKismetMathLibrary::FindLookAtRotation(ThisLocation, EnemyLocation), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), RotationSpeed).Yaw;
-			TempRotation.Normalize();
-			ThisRotation.Normalize();
-			if (TempRotation.Yaw - ThisRotation.Yaw > 0 && TempRotation.Yaw - ThisRotation.Yaw < 180 || TempRotation.Yaw - ThisRotation.Yaw < 0 && TempRotation.Yaw - ThisRotation.Yaw < -180) { rotateLeft(); }
+			tempRotation = thisRotation;
+			tempRotation.Yaw = UKismetMathLibrary::RInterpTo(thisRotation, UKismetMathLibrary::FindLookAtRotation(thisLocation, EnemyLocation), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), RotationSpeed).Yaw;
+			tempRotation.Normalize();
+			thisRotation.Normalize();
+			if (tempRotation.Yaw - thisRotation.Yaw > 0 && tempRotation.Yaw - thisRotation.Yaw < 180 || tempRotation.Yaw - thisRotation.Yaw < 0 && tempRotation.Yaw - thisRotation.Yaw < -180) { rotateLeft(); }
 			else { rotateRight(); }
 		}
 	}
@@ -96,12 +96,12 @@ void AAbstractTower::shoot()
 {
 	if (AllEnemies.Num() > 0 && isShooting)
 	{
-		AActor* tempBullet = GetWorld()->SpawnActor<AActor>(bullet, this->GetActorTransform());
+		AActor* tempBullet = GetWorld()->SpawnActor<AActor>(Bullet, this->GetActorTransform());
 		AAbstractBullet* Bulle = Cast<AAbstractBullet>(tempBullet);
 		if (Bulle)
 		{
-			Bulle->levelOfDamage = LevelOfTower - 1;
-			Bulle->enemy = AllEnemies[0];
+			Bulle->LevelOfDamage = LevelOfTower - 1;
+			Bulle->Enemy = AllEnemies[0];
 		}
 		GetWorldTimerManager().SetTimer(timer, this, &AAbstractTower::shoot, ShootingSpeed, false);
 	}

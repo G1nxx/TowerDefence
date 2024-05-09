@@ -14,8 +14,8 @@ AMainBase::AMainBase()
 // Called when the game starts or when spawned
 void AMainBase::BeginPlay()
 {
-	HealthOfMainBase = 5;
 	Super::BeginPlay();
+	HealthOfMainBase = 20;
 	
 }
 
@@ -25,8 +25,8 @@ void AMainBase::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (HealthOfMainBase <= 0)
 	{
-		UGameplayStatics::SetGamePaused(GetWorld(), true);
-		baseDestroyedEvent();
+		//UGameplayStatics::SetGamePaused(GetWorld(), true);
+		BaseDestroyedEvent();
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("You lose!"));
 	}
 }

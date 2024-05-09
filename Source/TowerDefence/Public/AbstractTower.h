@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #ifndef WORLD_FRAME_SPEED
@@ -9,6 +7,10 @@
 #define ROTATION_CONST 57.2957795131f
 #define ROTATION_ANGLE_RIGHT 0.025l
 #define ROTATION_ANGLE_LEFT -0.025l
+
+#define ROTATION_UPGRADE_CONST 1.04f
+#define SHOOTING_UPGRADE_CONST 1.05f
+#define UPGRADE_COST_CONST 1.67f
 
 #include "CoreMinimal.h"
 #include "BasicEnemy.h"
@@ -25,11 +27,11 @@ class TOWERDEFENCE_API AAbstractTower : public AActor
 
 	bool isShooting;
 
-	FRotator ThisRotation;
+	FRotator thisRotation;
 
-	FVector ThisLocation;
+	FVector thisLocation;
 
-	FRotator TempRotation;
+	FRotator tempRotation;
 
 	FTimerHandle timer;
 
@@ -56,12 +58,15 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Indexes")
 	ABasicEnemy* EnemyBase;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Indexes")
 	TArray<AActor*> AllEnemies;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPoint")
-	TSubclassOf<AActor> bullet;
+	TSubclassOf<AActor> Bullet;
+
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Clickked")
-	void clickedOnTower();
+	void ClickedOnTower();
 
 	UFUNCTION(BlueprintCallable, Category = "Upgrade")
 	void UpdateLevel();

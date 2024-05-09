@@ -32,7 +32,7 @@ public:
 	int32 SniperTowerCost = 100;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "EndOfGame")
-	void baseDestroyedEvent();
+	void BaseDestroyedEvent();
 
 protected:
 	// Called when the game starts or when spawned

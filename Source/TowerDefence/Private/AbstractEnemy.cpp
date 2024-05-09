@@ -40,10 +40,10 @@ void AAbstractEnemy::BeginPlay()
 	isRotatingY = false;
 	ValueForKilling = 0;
 	Health = 100;
-	EnemyDirection = forward;
+	enemyDirection = forward;
 
-	ThisPosition = this->GetActorLocation();
-	ThisRotation = this->GetActorRotation();
+	thisPosition = this->GetActorLocation();
+	thisRotation = this->GetActorRotation();
 	Super::BeginPlay();
 
 
@@ -63,52 +63,52 @@ void AAbstractEnemy::setIsMoving(bool branch)
 
 void AAbstractEnemy::moveEnemy()
 {
-	if (IndI < ControlPoints.Num())
+	if (indI < controlPoints.Num())
 	{
 		if (isRotatingX || isRotatingY) { rotateEnemy(); }
-		else if (ThisPosition.X == ControlPoints[IndI].X) {
-			if (ThisPosition.Y < ControlPoints[IndI].Y) {
-				ThisPosition.Y += MovementSpeed;
-				SetActorLocation(ThisPosition, true);
-				if (ThisPosition.Y >= ControlPoints[IndI].Y)
+		else if (thisPosition.X == controlPoints[indI].X) {
+			if (thisPosition.Y < controlPoints[indI].Y) {
+				thisPosition.Y += MovementSpeed;
+				SetActorLocation(thisPosition, true);
+				if (thisPosition.Y >= controlPoints[indI].Y)
 				{
-					SetActorLocation(ControlPoints[IndI], true);
+					SetActorLocation(controlPoints[indI], true);
 					isRotatingX = true;
-					EnemyDirection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y > RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
+					enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y > rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
 				}
 			}
-			else if (ThisPosition.Y > ControlPoints[IndI].Y)
+			else if (thisPosition.Y > controlPoints[indI].Y)
 			{
-				ThisPosition.Y -= MovementSpeed;
-				SetActorLocation(ThisPosition, true);
-				if (ThisPosition.Y <= ControlPoints[IndI].Y)
+				thisPosition.Y -= MovementSpeed;
+				SetActorLocation(thisPosition, true);
+				if (thisPosition.Y <= controlPoints[indI].Y)
 				{
-					SetActorLocation(ControlPoints[IndI], true);
+					SetActorLocation(controlPoints[indI], true);
 					isRotatingX = true;
-					EnemyDirection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y > RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
+					enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y > rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
 				}
 			}
 		}
-		else if (ThisPosition.Y == ControlPoints[IndI].Y)
+		else if (thisPosition.Y == controlPoints[indI].Y)
 		{
-			if (ThisPosition.X < ControlPoints[IndI].X) {
-				ThisPosition.X += MovementSpeed;
-				SetActorLocation(ThisPosition, true);
-				if (ThisPosition.X >= ControlPoints[IndI].X)
+			if (thisPosition.X < controlPoints[indI].X) {
+				thisPosition.X += MovementSpeed;
+				SetActorLocation(thisPosition, true);
+				if (thisPosition.X >= controlPoints[indI].X)
 				{
-					SetActorLocation(ControlPoints[IndI], true);
+					SetActorLocation(controlPoints[indI], true);
 					isRotatingY = true;
-					EnemyDirection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y < RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
+					enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y < rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
 				}
 			}
-			else if (ThisPosition.X > ControlPoints[IndI].X) {
-				ThisPosition.X -= MovementSpeed;
-				SetActorLocation(ThisPosition, true);
-				if (ThisPosition.X <= ControlPoints[IndI].X)
+			else if (thisPosition.X > controlPoints[indI].X) {
+				thisPosition.X -= MovementSpeed;
+				SetActorLocation(thisPosition, true);
+				if (thisPosition.X <= controlPoints[indI].X)
 				{
-					SetActorLocation(ControlPoints[IndI], true);
+					SetActorLocation(controlPoints[indI], true);
 					isRotatingY = true;
-					EnemyDirection = ThisPosition.X == RotatePoints[IndI].X ? ThisPosition.Y < RotatePoints[IndI].Y ? right : left : ThisPosition.X < RotatePoints[IndI].X ? right : left;
+					enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y < rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
 				}
 			}
 		}
@@ -126,59 +126,59 @@ void AAbstractEnemy::moveEnemy()
 
 void AAbstractEnemy::rotateEnemy()
 {
-	if (IndI == ControlPoints.Num() - 1)
+	if (indI == controlPoints.Num() - 1)
 	{
-		IndI++;
+		indI++;
 	}
 	else if (isRotatingX)
 	{
-		if (EnemyDirection == right)
+		if (enemyDirection == right)
 		{
 			rotateRight();
-			if (ThisPosition.X > RotatePoints[IndI].X)
+			if (thisPosition.X > rotatePoints[indI].X)
 			{
-				ThisPosition.X = RotatePoints[IndI].X;
-				ThisPosition.Y = ControlPoints[IndI + 1].Y;
-				SetActorLocation(ThisPosition, true);
-				IndI++;
+				thisPosition.X = rotatePoints[indI].X;
+				thisPosition.Y = controlPoints[indI + 1].Y;
+				SetActorLocation(thisPosition, true);
+				indI++;
 				isRotatingX = false;
 			}
 		}
-		else if (EnemyDirection == left)
+		else if (enemyDirection == left)
 		{
 			rotateRight();
-			if (ThisPosition.X < RotatePoints[IndI].X)
+			if (thisPosition.X < rotatePoints[indI].X)
 			{
-				ThisPosition.X = RotatePoints[IndI].X;
-				ThisPosition.Y = ControlPoints[IndI + 1].Y;
-				SetActorLocation(ThisPosition, true);
-				IndI++;
+				thisPosition.X = rotatePoints[indI].X;
+				thisPosition.Y = controlPoints[indI + 1].Y;
+				SetActorLocation(thisPosition, true);
+				indI++;
 				isRotatingX = false;
 			}
 		}
 	}
 	else if (isRotatingY)
 	{
-		if (EnemyDirection == right) {
+		if (enemyDirection == right) {
 			rotateRight();
-			if (ThisPosition.Y > RotatePoints[IndI].Y)
+			if (thisPosition.Y > rotatePoints[indI].Y)
 			{
-				ThisPosition.Y = RotatePoints[IndI].Y;
-				ThisPosition.X = ControlPoints[IndI + 1].X;
-				SetActorLocation(ThisPosition, true);
-				IndI++;
+				thisPosition.Y = rotatePoints[indI].Y;
+				thisPosition.X = controlPoints[indI + 1].X;
+				SetActorLocation(thisPosition, true);
+				indI++;
 				isRotatingY = false;
 			}
 		}
-		else if (EnemyDirection == left)
+		else if (enemyDirection == left)
 		{
 			rotateRight();
-			if (ThisPosition.Y < RotatePoints[IndI].Y)
+			if (thisPosition.Y < rotatePoints[indI].Y)
 			{
-				ThisPosition.Y = RotatePoints[IndI].Y;
-				ThisPosition.X = ControlPoints[IndI + 1].X;
-				SetActorLocation(ThisPosition, true);
-				IndI++;
+				thisPosition.Y = rotatePoints[indI].Y;
+				thisPosition.X = controlPoints[indI + 1].X;
+				SetActorLocation(thisPosition, true);
+				indI++;
 				isRotatingY = false;
 			}
 		}
@@ -186,27 +186,27 @@ void AAbstractEnemy::rotateEnemy()
 }
 
 void AAbstractEnemy::rotateRight() {
-	ThisRotation.Yaw -= ROTATION_CONST * ROTATION_ANGLE_RIGHT_ENEMY;
-	SetActorRotation(ThisRotation);
+	thisRotation.Yaw -= ROTATION_CONST * ROTATION_ANGLE_RIGHT_ENEMY;
+	SetActorRotation(thisRotation);
 	long double newX =
-		(ThisPosition.X - RotatePoints[IndI].X) * std::cos(ROTATION_ANGLE_RIGHT_ENEMY) + (ThisPosition.Y - RotatePoints[IndI].Y) * std::sin(ROTATION_ANGLE_RIGHT_ENEMY) + RotatePoints[IndI].X;
+		(thisPosition.X - rotatePoints[indI].X) * std::cos(ROTATION_ANGLE_RIGHT_ENEMY) + (thisPosition.Y - rotatePoints[indI].Y) * std::sin(ROTATION_ANGLE_RIGHT_ENEMY) + rotatePoints[indI].X;
 	long double newY =
-		(ThisPosition.Y - RotatePoints[IndI].Y) * std::cos(ROTATION_ANGLE_RIGHT_ENEMY) - (ThisPosition.X - RotatePoints[IndI].X) * std::sin(ROTATION_ANGLE_RIGHT_ENEMY) + RotatePoints[IndI].Y;
-	ThisPosition.X = newX;
-	ThisPosition.Y = newY;
-	SetActorLocation(ThisPosition, true);
+		(thisPosition.Y - rotatePoints[indI].Y) * std::cos(ROTATION_ANGLE_RIGHT_ENEMY) - (thisPosition.X - rotatePoints[indI].X) * std::sin(ROTATION_ANGLE_RIGHT_ENEMY) + rotatePoints[indI].Y;
+	thisPosition.X = newX;
+	thisPosition.Y = newY;
+	SetActorLocation(thisPosition, true);
 }
 
 
 void AAbstractEnemy::rotateLeft() {
-	ThisRotation.Yaw -= ROTATION_CONST * ROTATION_ANGLE_LEFT_ENEMY;
-	SetActorRotation(ThisRotation);
+	thisRotation.Yaw -= ROTATION_CONST * ROTATION_ANGLE_LEFT_ENEMY;
+	SetActorRotation(thisRotation);
 	long double newX =
-		(ThisPosition.X - RotatePoints[IndI].X) * std::cos(ROTATION_ANGLE_LEFT_ENEMY) + (ThisPosition.Y - RotatePoints[IndI].Y) * std::sin(ROTATION_ANGLE_LEFT_ENEMY) + RotatePoints[IndI].X;
+		(thisPosition.X - rotatePoints[indI].X) * std::cos(ROTATION_ANGLE_LEFT_ENEMY) + (thisPosition.Y - rotatePoints[indI].Y) * std::sin(ROTATION_ANGLE_LEFT_ENEMY) + rotatePoints[indI].X;
 	long double newY =
-		(ThisPosition.Y - RotatePoints[IndI].Y) * std::cos(ROTATION_ANGLE_LEFT_ENEMY) - (ThisPosition.X - RotatePoints[IndI].X) * std::sin(ROTATION_ANGLE_LEFT_ENEMY) + RotatePoints[IndI].Y;
-	ThisPosition.X = newX;
-	ThisPosition.X = newY;
-	SetActorLocation(ThisPosition, true);
+		(thisPosition.Y - rotatePoints[indI].Y) * std::cos(ROTATION_ANGLE_LEFT_ENEMY) - (thisPosition.X - rotatePoints[indI].X) * std::sin(ROTATION_ANGLE_LEFT_ENEMY) + rotatePoints[indI].Y;
+	thisPosition.X = newX;
+	thisPosition.X = newY;
+	SetActorLocation(thisPosition, true);
 }
 

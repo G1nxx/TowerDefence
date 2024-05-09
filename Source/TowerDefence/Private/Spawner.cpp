@@ -5,21 +5,22 @@
 
 void ASpawner::newWave()
 {
-	if ( thisWay == first)
+	if ( ThisWay == first)
 	{
-		if (waveCount % 8 == 0 && thisWay % 24 != 0) { EnemiesCount = 20; }
-		else if (waveCount % 9 == 0) { EnemiesCount = 30; }
-		else { EnemiesCount = 10; }
+		if (WaveCount % BASIC_ENEMY_MEDIUM_WAVE_CONST == 0 && ThisWay % (BASIC_ENEMY_MEDIUM_WAVE_CONST * 3) != 0) { EnemiesCount = MEDIUM_WAVE; }
+		else if (WaveCount % BASIC_ENEMY_HUGE_WAVE_CONST == 0) { EnemiesCount = HUGE_WAVE; }
+		else { EnemiesCount = SMALL_WAVE; }
 	}
-	else if (thisWay == second)
+	else if (ThisWay == second)
 	{
-		if (waveCount % 19 == 0 && waveCount > 40) { EnemiesCount = 25; }
-		else { EnemiesCount = 10; }
+		if (WaveCount % STRONG_ENEMY_HUGE_WAVE_CONST == 0 && WaveCount > STRONG_ENEMY_FIRST_HUGE_WAVE_CONST) { EnemiesCount = (HUGE_WAVE + MEDIUM_WAVE) / 2; }
+		else { EnemiesCount = SMALL_WAVE; }
 	}
 	GetWorldTimerManager().SetTimer(timer, this, &ASpawner::SpawnEnemies, SpawnTimer, false);
 	GetWorldTimerManager().SetTimer(timerWave, this, &ASpawner::newWave, 15, false);
 
-	++waveCount;
+	++WaveCount;
+	NewWave();
 }
 
 // Sets default values
@@ -31,18 +32,18 @@ ASpawner::ASpawner()
 }
 
 void ASpawner::SpawnEnemies()
-{   
+{
 	if (EnemiesCount--) {
-		switch (thisWay)
+		switch (ThisWay)
 		{
 		case first:
-			if (waveCount % 5 != 0 || waveCount % 7 != 0 || waveCount % 4 == 0)
+			if (WaveCount % WAVE_CONST_5 != 0 || WaveCount % WAVE_CONST_7 != 0 || WaveCount % WAVE_NOT_FOR_FIRST == 0)
 			{
 				AActor* tempEnemy = GetWorld()->SpawnActor<AActor>(EnemyActor, this->GetActorTransform());
 				AAbstractEnemy* enemy = Cast<AAbstractEnemy>(tempEnemy);
-				enemy->Health *= std::powl(1.065, waveCount);
-				enemy->ControlPoints = this->FirstLevelFirstWayControlPoints;
-				enemy->RotatePoints = this->FirstLevelFirstWayRotatePoints;
+				enemy->Health *= std::powl(HEALTH_ENHANCER, WaveCount);
+				enemy->controlPoints = this->firstLevelFirstWayControlPoints;
+				enemy->rotatePoints = this->firstLevelFirstWayRotatePoints;
 				enemy->setIsMoving(true);
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Enemy Spawned First"));
 			}
@@ -52,13 +53,13 @@ void ASpawner::SpawnEnemies()
 			}
 			break;
 		case second:
-			if ((waveCount % 5 == 0 || waveCount % 7 == 0) && waveCount > 15)
+			if ((WaveCount % WAVE_CONST_5 == 0 || WaveCount % WAVE_CONST_7 == 0) && WaveCount > FIRST_WAVE_FOR_SECOND)
 			{
 				AActor* tempEnemy = GetWorld()->SpawnActor<AActor>(EnemyActor, this->GetActorTransform());
 				AAbstractEnemy* enemy = Cast<AAbstractEnemy>(tempEnemy);
-				enemy->Health *= std::powl(1.065, waveCount);
-				enemy->ControlPoints = this->FirstLevelSecondWayControlPoints;
-				enemy->RotatePoints = this->FirstLevelSecondWayRotatePoints;
+				enemy->Health *= std::powl(HEALTH_ENHANCER, WaveCount);
+				enemy->controlPoints = this->firstLevelSecondWayControlPoints;
+				enemy->rotatePoints = this->firstLevelSecondWayRotatePoints;
 				enemy->setIsMoving(true);
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Enemy Spawned Second"));
 			}
@@ -83,30 +84,30 @@ void ASpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
-	waveCount = 1;
+	WaveCount = 1;
 
-	ThisPosition = this->GetActorLocation();
-	ThisRotation = this->GetActorRotation();
-	FirstLevelFirstWayControlPoints.Add(FVector(ThisPosition.X, ThisPosition.Y + 21 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelFirstWayControlPoints.Add(FVector(ThisPosition.X + 39 * SIZE_OF_TITLE, ThisPosition.Y + 22 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelFirstWayControlPoints.Add(FVector(ThisPosition.X + 40 * SIZE_OF_TITLE, ThisPosition.Y + 7 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelFirstWayControlPoints.Add(FVector(ThisPosition.X + 13 * SIZE_OF_TITLE, ThisPosition.Y + 6 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelFirstWayControlPoints.Add(FVector(ThisPosition.X + 12 * SIZE_OF_TITLE, ThisPosition.Y + 16 * SIZE_OF_TITLE, ThisPosition.Z));
+	thisPosition = this->GetActorLocation();
+	thisRotation = this->GetActorRotation();
+	firstLevelFirstWayControlPoints.Add(FVector(thisPosition.X, thisPosition.Y + 21 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelFirstWayControlPoints.Add(FVector(thisPosition.X + 39 * SIZE_OF_TITLE, thisPosition.Y + 22 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelFirstWayControlPoints.Add(FVector(thisPosition.X + 40 * SIZE_OF_TITLE, thisPosition.Y + 7 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelFirstWayControlPoints.Add(FVector(thisPosition.X + 13 * SIZE_OF_TITLE, thisPosition.Y + 6 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelFirstWayControlPoints.Add(FVector(thisPosition.X + 12 * SIZE_OF_TITLE, thisPosition.Y + 16 * SIZE_OF_TITLE, thisPosition.Z));
 
-	FirstLevelFirstWayRotatePoints.Add(FVector(ThisPosition.X + SIZE_OF_TITLE, ThisPosition.Y + 21 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelFirstWayRotatePoints.Add(FVector(ThisPosition.X + 39 * SIZE_OF_TITLE, ThisPosition.Y + 21 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelFirstWayRotatePoints.Add(FVector(ThisPosition.X + 39 * SIZE_OF_TITLE, ThisPosition.Y + 7 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelFirstWayRotatePoints.Add(FVector(ThisPosition.X + 13 * SIZE_OF_TITLE, ThisPosition.Y + 7 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelFirstWayRotatePoints.Add(FVector(ThisPosition.X + 12 * SIZE_OF_TITLE, ThisPosition.Y + 16 * SIZE_OF_TITLE, ThisPosition.Z));
+	firstLevelFirstWayRotatePoints.Add(FVector(thisPosition.X + SIZE_OF_TITLE, thisPosition.Y + 21 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelFirstWayRotatePoints.Add(FVector(thisPosition.X + 39 * SIZE_OF_TITLE, thisPosition.Y + 21 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelFirstWayRotatePoints.Add(FVector(thisPosition.X + 39 * SIZE_OF_TITLE, thisPosition.Y + 7 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelFirstWayRotatePoints.Add(FVector(thisPosition.X + 13 * SIZE_OF_TITLE, thisPosition.Y + 7 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelFirstWayRotatePoints.Add(FVector(thisPosition.X + 12 * SIZE_OF_TITLE, thisPosition.Y + 16 * SIZE_OF_TITLE, thisPosition.Z));
 
 
-	FirstLevelSecondWayControlPoints.Add(FVector(ThisPosition.X, ThisPosition.Y - 25 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelSecondWayControlPoints.Add(FVector(ThisPosition.X - 11 * SIZE_OF_TITLE, ThisPosition.Y - 26 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelSecondWayControlPoints.Add(FVector(ThisPosition.X - 12 * SIZE_OF_TITLE, ThisPosition.Y - 16 * SIZE_OF_TITLE, ThisPosition.Z));
+	firstLevelSecondWayControlPoints.Add(FVector(thisPosition.X, thisPosition.Y - 25 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelSecondWayControlPoints.Add(FVector(thisPosition.X - 11 * SIZE_OF_TITLE, thisPosition.Y - 26 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelSecondWayControlPoints.Add(FVector(thisPosition.X - 12 * SIZE_OF_TITLE, thisPosition.Y - 16 * SIZE_OF_TITLE, thisPosition.Z));
 
-	FirstLevelSecondWayRotatePoints.Add(FVector(ThisPosition.X - SIZE_OF_TITLE, ThisPosition.Y - 25 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelSecondWayRotatePoints.Add(FVector(ThisPosition.X - 11 * SIZE_OF_TITLE, ThisPosition.Y - 25 * SIZE_OF_TITLE, ThisPosition.Z));
-	FirstLevelSecondWayRotatePoints.Add(FVector(ThisPosition.X - 12 * SIZE_OF_TITLE, ThisPosition.Y - 16 * SIZE_OF_TITLE, ThisPosition.Z));
+	firstLevelSecondWayRotatePoints.Add(FVector(thisPosition.X - SIZE_OF_TITLE, thisPosition.Y - 25 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelSecondWayRotatePoints.Add(FVector(thisPosition.X - 11 * SIZE_OF_TITLE, thisPosition.Y - 25 * SIZE_OF_TITLE, thisPosition.Z));
+	firstLevelSecondWayRotatePoints.Add(FVector(thisPosition.X - 12 * SIZE_OF_TITLE, thisPosition.Y - 16 * SIZE_OF_TITLE, thisPosition.Z));
 
 	GetWorldTimerManager().SetTimer(timerWave, this, &ASpawner::newWave, 10, false);
 }

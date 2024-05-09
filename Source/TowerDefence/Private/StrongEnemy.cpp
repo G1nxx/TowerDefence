@@ -9,7 +9,7 @@ AStrongEnemy::AStrongEnemy()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	Health = 100;
-	IndI = 0;
+	indI = 0;
 	ValueForKilling = 5;
 	MovementSpeed = 0.75;
 }
@@ -19,7 +19,7 @@ void AStrongEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	Health = 60;
-	IndI = 0;
+	indI = 0;
 	ValueForKilling = 5;
 	MovementSpeed = 0.75;
 	

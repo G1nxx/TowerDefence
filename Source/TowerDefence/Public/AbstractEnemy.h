@@ -27,9 +27,9 @@ class TOWERDEFENCE_API AAbstractEnemy : public AActor
 {
 	GENERATED_BODY()
 
-	FVector ThisPosition;
+	FVector thisPosition;
 
-	FRotator ThisRotation;
+	FRotator thisRotation;
 
 	FTimerHandle moveTimer;
 protected:
@@ -38,9 +38,9 @@ protected:
 	bool isRotatingY;
 	bool isMoving;
 
-	Dirrection EnemyDirection;
+	Dirrection enemyDirection;
 
-	int32 IndI;
+	int32 indI;
 
 	void checkMoveEnemy();
 	
@@ -48,8 +48,8 @@ public:
 	// Sets default values for this actor's properties
 	AAbstractEnemy();
 
-	TArray<FVector> ControlPoints;
-	TArray<FVector> RotatePoints;
+	TArray<FVector> controlPoints;
+	TArray<FVector> rotatePoints;
 
 	void setIsMoving(bool branch);
 

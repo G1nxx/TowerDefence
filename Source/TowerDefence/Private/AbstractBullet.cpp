@@ -9,7 +9,7 @@ void AAbstractBullet::BeginPlay()
 	Super::BeginPlay();
 	forceSpeed = 5;
 	rotationIsSet = 0;
-	damage = 20;
+	Damage = 20;
 
 	GetWorldTimerManager().SetTimer(forceTimer, this, &AAbstractBullet::force, WORLD_FRAME_SPEED, true);
 }
@@ -27,12 +27,12 @@ AAbstractBullet::AAbstractBullet()
 
 void AAbstractBullet::force()
 {
-	if (enemy && !enemy->IsActorBeingDestroyed())
+	if (Enemy && !Enemy->IsActorBeingDestroyed())
 	{
-		FVector actorLocation = enemy->GetActorLocation();
-		if (actorLocation.X >= 0 && actorLocation.Y >= 0 && actorLocation.Y <= 960 && actorLocation.X <= 1792)
+		FVector actorLocation = Enemy->GetActorLocation();
+		if (actorLocation.X >= 0 && actorLocation.Y >= 0 && actorLocation.Y <= MAP_HEIGHT && actorLocation.X <= MAP_WIDTH)
 		{
-			FVector enemyLocation = enemy->GetActorLocation();
+			FVector enemyLocation = Enemy->GetActorLocation();
 			FVector thisLocation = this->GetActorLocation();
 
 			FVector vector = enemyLocation - thisLocation;
