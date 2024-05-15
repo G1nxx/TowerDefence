@@ -8,7 +8,7 @@ AStrongEnemy::AStrongEnemy()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	Health = 100;
+	Health = 60;
 	indI = 0;
 	ValueForKilling = 5;
 	MovementSpeed = 0.75;

@@ -11,6 +11,21 @@ void AAbstractEnemy::checkMoveEnemy()
 	}
 }
 
+void AAbstractEnemy::setEnemyX()
+{
+	SetActorLocation(controlPoints[indI], true);
+	isRotatingX = true;
+	enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y > rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
+}
+
+
+void AAbstractEnemy::setEnemyY()
+{
+	SetActorLocation(controlPoints[indI], true);
+	isRotatingY = true;
+	enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y < rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
+}
+
 // Sets default values
 AAbstractEnemy::AAbstractEnemy()
 {
@@ -72,9 +87,7 @@ void AAbstractEnemy::moveEnemy()
 				SetActorLocation(thisPosition, true);
 				if (thisPosition.Y >= controlPoints[indI].Y)
 				{
-					SetActorLocation(controlPoints[indI], true);
-					isRotatingX = true;
-					enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y > rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
+					setEnemyX();
 				}
 			}
 			else if (thisPosition.Y > controlPoints[indI].Y)
@@ -83,9 +96,7 @@ void AAbstractEnemy::moveEnemy()
 				SetActorLocation(thisPosition, true);
 				if (thisPosition.Y <= controlPoints[indI].Y)
 				{
-					SetActorLocation(controlPoints[indI], true);
-					isRotatingX = true;
-					enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y > rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
+					setEnemyX();
 				}
 			}
 		}
@@ -96,9 +107,7 @@ void AAbstractEnemy::moveEnemy()
 				SetActorLocation(thisPosition, true);
 				if (thisPosition.X >= controlPoints[indI].X)
 				{
-					SetActorLocation(controlPoints[indI], true);
-					isRotatingY = true;
-					enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y < rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
+					setEnemyY();
 				}
 			}
 			else if (thisPosition.X > controlPoints[indI].X) {
@@ -106,9 +115,7 @@ void AAbstractEnemy::moveEnemy()
 				SetActorLocation(thisPosition, true);
 				if (thisPosition.X <= controlPoints[indI].X)
 				{
-					SetActorLocation(controlPoints[indI], true);
-					isRotatingY = true;
-					enemyDirection = thisPosition.X == rotatePoints[indI].X ? thisPosition.Y < rotatePoints[indI].Y ? right : left : thisPosition.X < rotatePoints[indI].X ? right : left;
+					setEnemyY();
 				}
 			}
 		}

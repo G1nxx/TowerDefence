@@ -1,34 +1,51 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Spawner.h"
 
 void ASpawner::newWave()
 {
-	if ( ThisWay == first)
+	if (WaveCount <= 100)
 	{
-		if (WaveCount % BASIC_ENEMY_MEDIUM_WAVE_CONST == 0 && ThisWay % (BASIC_ENEMY_MEDIUM_WAVE_CONST * 3) != 0) { EnemiesCount = MEDIUM_WAVE; }
-		else if (WaveCount % BASIC_ENEMY_HUGE_WAVE_CONST == 0) { EnemiesCount = HUGE_WAVE; }
-		else { EnemiesCount = SMALL_WAVE; }
-	}
-	else if (ThisWay == second)
-	{
-		if (WaveCount % STRONG_ENEMY_HUGE_WAVE_CONST == 0 && WaveCount > STRONG_ENEMY_FIRST_HUGE_WAVE_CONST) { EnemiesCount = (HUGE_WAVE + MEDIUM_WAVE) / 2; }
-		else { EnemiesCount = SMALL_WAVE; }
-	}
-	GetWorldTimerManager().SetTimer(timer, this, &ASpawner::SpawnEnemies, SpawnTimer, false);
-	GetWorldTimerManager().SetTimer(timerWave, this, &ASpawner::newWave, 15, false);
+		if (ThisWay == first)
+		{
+			if (WaveCount % BASIC_ENEMY_MEDIUM_WAVE_CONST == 0 && ThisWay % (BASIC_ENEMY_MEDIUM_WAVE_CONST * 3) != 0) { EnemiesCount = MEDIUM_WAVE; }
+			else if (WaveCount % BASIC_ENEMY_HUGE_WAVE_CONST == 0) { EnemiesCount = HUGE_WAVE; }
+			else { EnemiesCount = SMALL_WAVE; }
+		}
+		else if (ThisWay == second)
+		{
+			if (WaveCount % STRONG_ENEMY_HUGE_WAVE_CONST == 0 && WaveCount > STRONG_ENEMY_FIRST_HUGE_WAVE_CONST) { EnemiesCount = HUGE_WAVE / 2; }
+			else { EnemiesCount = SMALL_WAVE / 2; }
+		}
+		GetWorldTimerManager().SetTimer(timer, this, &ASpawner::SpawnEnemies, SpawnTimer, false);
+		GetWorldTimerManager().SetTimer(timerWave, this, &ASpawner::newWave, 15, false);
 
-	++WaveCount;
-	NewWave();
+		++WaveCount;
+		NewWave();
+	}
+	else
+	{
+		FinalWave();
+	}
 }
 
-// Sets default values
+void ASpawner::updateEnemyFirst(AAbstractEnemy* enemy)
+{
+	enemy->Health *= std::powl(HEALTH_ENHANCER, WaveCount);
+	enemy->controlPoints = this->firstLevelFirstWayControlPoints;
+	enemy->rotatePoints = this->firstLevelFirstWayRotatePoints;
+	enemy->setIsMoving(true);
+}
+
+void ASpawner::updateEnemySecond(AAbstractEnemy* enemy)
+{
+	enemy->Health *= std::powl(HEALTH_ENHANCER, WaveCount);
+	enemy->controlPoints = this->firstLevelSecondWayControlPoints;
+	enemy->rotatePoints = this->firstLevelSecondWayRotatePoints;
+	enemy->setIsMoving(true);
+}
+
 ASpawner::ASpawner()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true; 
-
 }
 
 void ASpawner::SpawnEnemies()
@@ -41,11 +58,7 @@ void ASpawner::SpawnEnemies()
 			{
 				AActor* tempEnemy = GetWorld()->SpawnActor<AActor>(EnemyActor, this->GetActorTransform());
 				AAbstractEnemy* enemy = Cast<AAbstractEnemy>(tempEnemy);
-				enemy->Health *= std::powl(HEALTH_ENHANCER, WaveCount);
-				enemy->controlPoints = this->firstLevelFirstWayControlPoints;
-				enemy->rotatePoints = this->firstLevelFirstWayRotatePoints;
-				enemy->setIsMoving(true);
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Enemy Spawned First"));
+				updateEnemyFirst(enemy);
 			}
 			else
 			{
@@ -57,11 +70,7 @@ void ASpawner::SpawnEnemies()
 			{
 				AActor* tempEnemy = GetWorld()->SpawnActor<AActor>(EnemyActor, this->GetActorTransform());
 				AAbstractEnemy* enemy = Cast<AAbstractEnemy>(tempEnemy);
-				enemy->Health *= std::powl(HEALTH_ENHANCER, WaveCount);
-				enemy->controlPoints = this->firstLevelSecondWayControlPoints;
-				enemy->rotatePoints = this->firstLevelSecondWayRotatePoints;
-				enemy->setIsMoving(true);
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Enemy Spawned Second"));
+				updateEnemySecond(enemy);
 			}
 			else
 			{
@@ -76,10 +85,8 @@ void ASpawner::SpawnEnemies()
 
 		GetWorldTimerManager().SetTimer(timer, this, &ASpawner::SpawnEnemies, SpawnTimer, false);
 	}
-	//UE_LOG(LogTemp, Warning, TEXT(""));
 }
 
-// Called when the game starts or when spawned
 void ASpawner::BeginPlay()
 {
 	Super::BeginPlay();

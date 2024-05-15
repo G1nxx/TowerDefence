@@ -51,6 +51,10 @@ class TOWERDEFENCE_API ASpawner : public AActor
 	TArray<FVector> firstLevelSecondWayRotatePoints;
 
 	void newWave();
+
+	void updateEnemyFirst(AAbstractEnemy *enemy);
+
+	void updateEnemySecond(AAbstractEnemy* enemy);
 	
 public:	
 	// Sets default values for this actor's properties
@@ -76,6 +80,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Spawn")
 	void NewWave();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Spawn")
+	void FinalWave();
 
 protected:
 	// Called when the game starts or when spawned

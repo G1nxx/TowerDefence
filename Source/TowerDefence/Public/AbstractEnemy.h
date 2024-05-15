@@ -43,6 +43,9 @@ protected:
 	int32 indI;
 
 	void checkMoveEnemy();
+
+	void setEnemyX();
+	void setEnemyY();
 	
 public:	
 	// Sets default values for this actor's properties
