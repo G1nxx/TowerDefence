@@ -19,7 +19,7 @@ void ABasicTower::BeginPlay()
 	LevelOfTower = 1;
 	CostOfTower = 50;
 	CostOfUpgrading = 30;
-	ShootingSpeed = 1.3;
+	ShootingSpeed = 1.15;
 	
 }
 
